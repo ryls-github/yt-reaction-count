@@ -1,0 +1,21 @@
+{
+	"name": "yt-reaction-count",
+	"version": "1.0.0",
+	"manifest_version": 3,
+	"action": {
+		"default_title": "Open Page"
+	},
+	"background": {
+		"service_worker": "background.js"
+	},
+	"content_scripts": [
+		{
+			"matches": ["https://www.youtube.com/live_chat?*"],
+			"all_frames": true,
+			"js": ["content-script.js"]
+		}
+	],
+	"permissions": [
+		"storage"
+	]
+}
