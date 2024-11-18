@@ -1,5 +1,5 @@
-import { html, css, LitElement, live } from "./lit-all.min.js"
-import { reaction_types, aggregate, clear, getVideo } from "./data.js"
+import { html, css, LitElement, live } from "../lib/lit-all.min.js"
+import { aggregate, clear, getVideo } from "./data.js"
 import "./detail-graph.js"
 
 export class ReactionViewer extends LitElement {
@@ -101,7 +101,7 @@ export class ReactionViewer extends LitElement {
 		this.editing_end = ""
 		this.start = ""
 		this.end = ""
-		this.items = aggregate(null, null)
+		this.data = aggregate(null, null)
 		this.details = null
 	}
 
@@ -128,7 +128,7 @@ export class ReactionViewer extends LitElement {
 	filter() {
 		this.start = this.editing_start
 		this.end = this.editing_end
-		this.items = aggregate(
+		this.data = aggregate(
 			this.start === "" ? null : new Date(this.start),
 			this.end === "" ? null : new Date(this.end)
 		)
@@ -137,7 +137,7 @@ export class ReactionViewer extends LitElement {
 	async clear() {
 		if (confirm("すべてのデータをクリアしますか？")) {
 			await clear()
-			this.items = []
+			this.data = []
 		}
 	}
 
@@ -178,18 +178,18 @@ export class ReactionViewer extends LitElement {
 							<th class="channel">チャンネル</th>
 							<th class="title">タイトル</th>
 							<th class="last_reaction">最終リアクション</th>
-							${reaction_types.map(r => html`<th class="reaction">${r}</th>`)}
+							${this.data.reaction_types.map(r => html`<th class="reaction">${r}</th>`)}
 						</tr>
 					</thead>
 					<tbody @click=${this.onclickRow}>
-						${this.items.map(item => {
+						${this.data.rows.map(item => {
 							return html`
 								<tr>
 									<td>${item.video}</td>
 									<td title=${item.channel}>${item.channel}</td>
 									<td title=${item.title}>${item.title}</td>
 									<td>${formatDateMs(item.last_reaction)}</td>
-									${reaction_types.map(r => html`<td class="reaction">${item[r]}</td>`)}
+									${this.data.reaction_types.map(r => html`<td class="reaction">${item[r]}</td>`)}
 								</tr>
 							`
 						})}

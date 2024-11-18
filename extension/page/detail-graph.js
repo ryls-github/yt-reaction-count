@@ -1,5 +1,5 @@
-import { html, css, LitElement } from "./lit-all.min.js"
-import ApexCharts from "./apexcharts.esm.js"
+import { html, css, LitElement } from "../lib/lit-all.min.js"
+import ApexCharts from "../lib/apexcharts.esm.js"
 
 export class DetailGraph extends LitElement {
 	static properties = {
