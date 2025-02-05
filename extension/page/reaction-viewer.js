@@ -6,7 +6,7 @@ export class ReactionViewer extends LitElement {
 	static properties = {
 		editing_start: {},
 		editing_end: {},
-		items: {},
+		data: {},
 		details: {},
 	}
 
