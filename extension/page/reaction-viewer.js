@@ -134,7 +134,13 @@ export class ReactionViewer extends LitElement {
 		)
 	}
 
-	async clear() {
+	clearFilter() {
+		this.editing_start = ""
+		this.editing_end = ""
+		this.filter()
+	}
+
+	async clearData() {
 		if (confirm("すべてのデータをクリアしますか？")) {
 			await clear()
 			this.data = []
@@ -166,8 +172,9 @@ export class ReactionViewer extends LitElement {
 					<input type="datetime-local" name="editing_end" .value=${live(this.editing_end)} @input=${this.oninput}>
 				</div>
 				<button @click=${this.filter}>確定</button>
+				<button @click=${this.clearFilter}>クリア</button>
 				<hr class="vhr"/>
-				<button @click=${this.clear}>クリア</button>
+				<button @click=${this.clearData}>リアクション履歴を削除</button>
 			</div>
 			<div class="result">
 				<h1 class="result-title">${title}</h1>
